@@ -36,7 +36,12 @@ pkg_install() {
   [[ ${#missing[@]} -eq 0 ]] && return 0
   if [[ "$APT_UPDATED" -eq 0 ]]; then
     log "Updating apt package lists..."
-    sudo apt-get update -qq
+    # A nonzero exit here is often just a broken post-update hook (e.g.
+    # command-not-found's db rebuilder erroring on some Kali installs) —
+    # the package lists themselves usually still updated fine. Don't treat
+    # that as fatal; let the actual `apt-get install` below fail loudly if
+    # the lists really are unusable.
+    sudo apt-get update -qq || log_warn "apt-get update reported an error (often a harmless post-update hook) — continuing with whatever package lists are available."
     APT_UPDATED=1
   fi
   log "Installing: ${missing[*]}"
