@@ -1,0 +1,32 @@
+<svg width="3840" height="2160" viewBox="0 0 3840 2160" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="sky" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"  stop-color="#1b2a5e"/>
+      <stop offset="35%" stop-color="#3a3f8f"/>
+      <stop offset="65%" stop-color="#7a4fa3"/>
+      <stop offset="100%" stop-color="#d97aa0"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="78%" cy="20%" r="60%">
+      <stop offset="0%" stop-color="#ffd9a0" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#ffd9a0" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="wave1" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.02"/>
+    </linearGradient>
+    <linearGradient id="wave2" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0b1030" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#0b1030" stop-opacity="0.05"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="3840" height="2160" fill="url(#sky)"/>
+  <rect width="3840" height="2160" fill="url(#glow)"/>
+
+  <path d="M0,1500 C700,1350 1200,1650 1900,1500 C2600,1350 3100,1600 3840,1450 L3840,2160 L0,2160 Z"
+        fill="url(#wave1)"/>
+  <path d="M0,1700 C800,1600 1300,1850 2100,1700 C2800,1570 3200,1800 3840,1680 L3840,2160 L0,2160 Z"
+        fill="url(#wave2)"/>
+  <path d="M0,1900 C900,1820 1500,2000 2300,1880 C2900,1790 3300,1980 3840,1870 L3840,2160 L0,2160 Z"
+        fill="#0a0f28" fill-opacity="0.55"/>
+</svg>

@@ -1,0 +1,4 @@
+# Local, user-supplied fonts (e.g. a legally-owned copy of San Francisco).
+# Don't commit real Apple font files here.
+assets/fonts/*
+!assets/fonts/.gitkeep
