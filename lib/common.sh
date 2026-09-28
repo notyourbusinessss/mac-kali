@@ -45,7 +45,22 @@ pkg_install() {
     APT_UPDATED=1
   fi
   log "Installing: ${missing[*]}"
-  sudo DEBIAN_FRONTEND=noninteractive apt-get install -y "${missing[@]}"
+  if sudo DEBIAN_FRONTEND=noninteractive apt-get install -y "${missing[@]}"; then
+    return 0
+  fi
+
+  # One renamed/unavailable package name shouldn't block everything else in
+  # the batch — Debian/Kali package names do drift over time. Retry one at a
+  # time so the good ones still get installed.
+  log_warn "Batch install failed (likely one unavailable/renamed package in the list) — retrying individually so that doesn't block the rest."
+  local p failed=()
+  for p in "${missing[@]}"; do
+    dpkg -s "$p" >/dev/null 2>&1 && continue
+    sudo DEBIAN_FRONTEND=noninteractive apt-get install -y "$p" || failed+=("$p")
+  done
+  if [[ ${#failed[@]} -gt 0 ]]; then
+    log_warn "Couldn't install: ${failed[*]} — skipping. mac-kali will still work, just without whatever those provide."
+  fi
 }
 
 clone_or_update() {
