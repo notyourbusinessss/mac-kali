@@ -97,6 +97,39 @@ for this repo. Apple's actual San Francisco font isn't redistributable, so
 the default font is Inter, an open alternative — see **Customizing** above
 if you own a legal copy of SF Pro and want to use it instead.
 
+## Full reset (nuclear option)
+
+If things get into a broken/half-applied state and `./uninstall.sh` isn't
+cutting it, you can wipe *all* of XFCE's config and let it regenerate stock
+defaults — not just what mac-kali touched. This moves your config aside
+(rather than deleting it) so nothing's actually lost:
+
+```bash
+TS=$(date +%s)
+mv ~/.config/xfce4        ~/.config/xfce4.bak-$TS
+mv ~/.config/gtk-3.0      ~/.config/gtk-3.0.bak-$TS 2>/dev/null
+mv ~/.config/autostart    ~/.config/autostart.bak-$TS 2>/dev/null
+rm -f ~/.gtkrc-2.0
+
+# make sure Kali's own theme/icon files on disk are pristine
+sudo apt-get install --reinstall kali-themes kali-desktop-xfce
+
+# stop the mac-kali dock/launcher processes
+pkill plank 2>/dev/null
+
+# optional: also remove what mac-kali installed into your home dir
+rm -rf ~/.themes/WhiteSur* ~/.icons/WhiteSur* \
+       ~/.local/share/fonts/mac-kali ~/.local/share/plank/themes/macOS-Dark \
+       ~/.local/share/backgrounds/mac-kali ~/.config/rofi/mac-spotlight.rasi
+```
+
+Then **log all the way out and back in** (not just restart the panel) —
+XFCE needs a fresh session to regenerate default config from scratch.
+
+Heads up: this resets *any* XFCE customization you've made, not just
+mac-kali's — try `./uninstall.sh` first if you just want mac-kali's changes
+undone while keeping your own tweaks.
+
 ## License
 
 [MIT](LICENSE) for the scripts and original assets in this repo. Third-party
